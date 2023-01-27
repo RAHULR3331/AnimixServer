@@ -10,11 +10,10 @@ useNewUrlParser:true
  const User=mongoose.model('user',
  {
     //Schema creation
-    acno:Number,
+    email:String,
     username:String,
     password:String,
     balance:Number,
-    transaction:[]
  })
 
  // manga modal
@@ -29,8 +28,24 @@ const Manga=mongoose.model('manga',{
    img:String
 })
 
+const Watchlist = mongoose.model('Watchlist',
+{
+   
+        email:String,
+        id:Number,
+        name:String,
+        description:String,
+        rating:String,
+        episode:String,
+        categorie:String,
+        studio:String,
+        img:String
+}
+)
  //Export collection
  module.exports={
     User,
-    Manga
+    Manga,
+    Watchlist
+    
  }

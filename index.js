@@ -62,7 +62,7 @@
  //Registration request
  app.post('/register', (req, res) => {
      console.log(req.body);
-     dataservice.register(req.body.acno, req.body.username, req.body.pswd)
+     dataservice.register(req.body.email, req.body.username, req.body.pswd)
      .then(result=>{
         res.status(result.statusCode).json(result);
 
@@ -74,7 +74,7 @@
  //Login request
  app.post('/login', (req, res) => {
      console.log(req.body);
-     dataservice.login(req.body.acno, req.body.pswd)
+     dataservice.login(req.body.email, req.body.pswd)
      .then(result=>{
         res.status(result.statusCode).json(result);
      })    
@@ -83,15 +83,33 @@
 
  //api to get manga items
  app.get('/getmanga', (req, res) => {
-    dataservice.getmanga(req.body._id,req.body.name, req.body.description, req.body.Rating, req.body.categorie, req.body.studio, req.body.img).then(
+    dataservice.getmanga(req.body.id,req.body.name, req.body.description, req.body.Rating ,req.body.episode, req.body.categorie, req.body.studio, req.body.img).then(
         (result) => {
             res.status(result.statusCode).json(result)
         })
 })
 
 //api to post watchlist
-app.post('/addtowatchlist', (req, res) => {
-    dataservice.addtowatchlist(req.body.id,req.body.name, req.body.description, req.body.Rating, req.body.categorie, req.body.studio, req.body.img).then(        (result) => {
-            res.status(result.statusCode).json(result)
-        })
+app.post('/addtowatchlist',(req,res)=>{
+    dataservice.addtowatchlist(req.body.email,req.body.id,req.body.name,req.body.description,req.body.Rating,req.body.episode,req.body.categorie,req.body.studio,req.body.img)
+    .then(result=>{
+        res.status(result.statusCode).json(result)
+    })
+})
+
+//api to post getwatch list
+app.post('/getwatchlist',(req,res)=>{
+    dataservice.getwatchlist(req.body.email)
+    .then(result=>{
+        res.status(result.statusCode).json(result)
+    })
+})
+
+
+//api to delete a anime from watch list
+app.delete('/deletewatchlist/:email',(req,res)=>{
+    dataservice.deletewatchlist(req.params.email)
+    .then(result=>{
+        res.status(result.statuscode).json(result)
+    })
 })
